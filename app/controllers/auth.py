@@ -19,8 +19,13 @@ def login():
                 "message": "Username ou mot de passe incorrect"
             }), HTTPStatus.UNAUTHORIZED
 
-        access = create_access_token(identity=str(data.get("username")))
-        refresh = create_refresh_token(identity=str(data.get("username")))
+        access = create_access_token(
+            identity=str(user['id']),
+            additional_claims={
+                'username': user['username']
+            }
+        )
+        refresh = create_refresh_token(identity=str(user['id']))
 
         return jsonify({
             "user": user,

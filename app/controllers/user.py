@@ -1,6 +1,8 @@
 from http import HTTPStatus
 
-from flask import jsonify, request
+from flask import jsonify
+from flask_jwt_extended import get_jwt_identity
+
 import app.services.user as service
 
 
@@ -12,6 +14,18 @@ def get_all_users():
 
 def get_user_by_id(user_id):
     try:
-        return jsonify(service.get_user_by_id(user_id)), HTTPStatus.OK
+        if user_id != int(get_jwt_identity()):
+            return jsonify({
+                "message": "Accès interdit"
+            }), HTTPStatus.FORBIDDEN
+
+        user = service.get_user_by_id(user_id)
+
+        if user is None:
+            return jsonify({
+                "message": "Utilisateur introuvable"
+            }), HTTPStatus.NOT_FOUND
+
+        return jsonify(user), HTTPStatus.OK
     except Exception as e:
         return jsonify({"message": str(e)}), HTTPStatus.INTERNAL_SERVER_ERROR
