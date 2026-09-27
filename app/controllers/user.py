@@ -1,6 +1,6 @@
 from http import HTTPStatus
 
-from flask import jsonify
+from flask import jsonify, request
 from flask_jwt_extended import get_jwt_identity
 
 import app.services.user as service
@@ -8,7 +8,7 @@ import app.services.user as service
 
 def get_all_users():
     try:
-        return jsonify(service.get_all_users()), HTTPStatus.OK
+        return jsonify(service.get_all_users(request.args)), HTTPStatus.OK
     except Exception as e:
         return jsonify({"message": str(e)}), HTTPStatus.INTERNAL_SERVER_ERROR
 
