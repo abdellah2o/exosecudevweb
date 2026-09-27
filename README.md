@@ -11,7 +11,7 @@ Ce projet est pour moi un bac à sable pour tester toutes sortes de mesures de s
 
 ## Extensions python à installer
 Tout d'abord activer le virtual environment python.
-### Windows CMD
+### Windows PowerShell
 
 ```cmd
 .\.venv\Scripts\Activate.ps1
