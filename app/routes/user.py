@@ -14,3 +14,7 @@ def get_all_users():
 @jwt_required()
 def get_user_by_id(user_id: int):
     return controller.get_user_by_id(user_id)
+
+@user_bp.route("/api/users", methods=["POST"])
+def create_user():
+    return controller.create_user()

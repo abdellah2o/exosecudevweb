@@ -26,7 +26,7 @@ def hello_world():  # put application's code here
 
 @app.route('/api/health')
 def testdb():
-    users = db.cur.execute("SELECT * FROM user;").fetchall()
+    users = db.cur.execute("SELECT id, username FROM user;").fetchall()
     return jsonify([dict(user) for user in users])
 
 

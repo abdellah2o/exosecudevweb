@@ -29,3 +29,11 @@ def get_user_by_id(user_id):
         return jsonify(user), HTTPStatus.OK
     except Exception as e:
         return jsonify({"message": str(e)}), HTTPStatus.INTERNAL_SERVER_ERROR
+
+def create_user():
+    data = request.get_json()
+
+    try:
+        return jsonify(service.create_user(data["username"], data["password"])), HTTPStatus.OK
+    except Exception as e:
+        return jsonify({"message": str(e)}), HTTPStatus.INTERNAL_SERVER_ERROR

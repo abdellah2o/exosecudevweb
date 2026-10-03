@@ -1,10 +1,14 @@
 import db
+from werkzeug.security import check_password_hash
 
 
-def login(username, password):
-    verif = db.cur.execute("SELECT * FROM user WHERE username=? AND password=?;", (username, password)).fetchone()
+def login(username: str, password: str):
+    user = db.cur.execute("SELECT * FROM user WHERE username=?;", (username,)).fetchone()
 
-    if verif is None:
+    if user is None:
         return None
 
-    return dict(verif)
+    if not check_password_hash(user["password"], password):
+        return None
+
+    return dict(user)
